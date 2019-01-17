@@ -31,11 +31,13 @@ function __sf_section_host -d "Display the current hostname if connected over SS
 		else
 			set host_color $SPACEFISH_HOST_COLOR
 		end
-
+        
+        set -l hname (hostname | string split .)[1]
+        
 		__sf_lib_section \
 			$host_color \
 			$SPACEFISH_HOST_PREFIX \
-			(hostname) \
+			$hname \
 			$SPACEFISH_HOST_SUFFIX
 		end
 end
