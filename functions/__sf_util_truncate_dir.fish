@@ -11,7 +11,13 @@ function __sf_util_truncate_dir -a path truncate_to -d "Truncate a directory pat
 		if test (count $folders) -le "$truncate_to"
 			echo $path
 		else
-			echo (string join / $folders[(math 0 - $truncate_to)..-1])
+      set -l prefix
+			if test -z $SPACEFISH_DIR_TRUNC_LEN -o "$SPACEFISH_DIR_TRUNC_LEN" -eq 0
+				set prefix ".../"
+			else
+				set prefix (string sub -l $SPACEFISH_DIR_TRUNC_LEN $folders[1..(math -1 - $truncate_to)] | tr "\n" /)
+			end
+			echo $prefix(string join / $folders[(math 0 - $truncate_to)..-1])
 		end
 	end
 end
